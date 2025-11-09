@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TextComposite implements TextComponent {
-    private static final String PARAGRAPHS_SYMBOL = "/n  ";
+    private static final String PARAGRAPHS_SYMBOL = "/n/n";
     private static final String LEXEMES_SYMBOL = " ";
     private static final String SENTENCES_SYMBOL= " ";
 
@@ -56,6 +56,6 @@ public class TextComposite implements TextComponent {
             }
         }
 
-        return builder.toString();
+        return builder.toString().trim();
     }
 }
