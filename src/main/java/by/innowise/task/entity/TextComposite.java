@@ -56,6 +56,6 @@ public class TextComposite implements TextComponent {
             }
         }
 
-        return builder.toString().trim();
+        return builder.toString().strip();
     }
 }

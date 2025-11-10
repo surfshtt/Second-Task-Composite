@@ -15,7 +15,7 @@ public class WordParser extends AbstractTextParser {
 
         if(matcher.find()) {
             String word = matcher.group();
-            return new TextLeaf(word.trim(), TypeComponent.WORD);
+            return new TextLeaf(word.strip(), TypeComponent.WORD);
         }
         else{
             return new TextLeaf(text,TypeComponent.PUNCTUATION);
