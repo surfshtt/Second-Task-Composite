@@ -18,7 +18,7 @@ public class ParagraphParser extends AbstractTextParser {
             String paragraphText = matcher.group().strip();
             if (!paragraphText.isBlank()) {
                 TextComposite paragraph = new TextComposite(TypeComponent.PARAGRAPH);
-                TextComponent sentenceComponent = nextParser.parse(paragraphText);
+                TextComponent sentenceComponent = this.getNext().parse(paragraphText);
                 for (TextComponent sentence : sentenceComponent.getChild()) {
                     paragraph.add(sentence);
                 }

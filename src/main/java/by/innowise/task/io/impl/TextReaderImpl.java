@@ -14,11 +14,11 @@ public class TextReaderImpl implements TextReader {
         Path path = Path.of(fileName);
 
         try {
-            if (Files.exists(path)) {
+            if (!Files.exists(path)) {
                 throw new FileReadException("There isn't file in such directory: " + fileName);
             }
 
-            if (Files.isReadable(path)) {
+            if (!Files.isReadable(path)) {
                 throw new FileReadException("File isn't readable in such directory: " + fileName);
             }
 

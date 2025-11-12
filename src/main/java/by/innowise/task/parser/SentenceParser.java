@@ -18,7 +18,7 @@ public class SentenceParser extends AbstractTextParser {
             String sentenceText = matcher.group().strip();
             if (!sentenceText.isBlank()) {
                 TextComposite sentence = new TextComposite(TypeComponent.SENTENCE);
-                TextComponent lexemeComponent = nextParser.parse(sentenceText);
+                TextComponent lexemeComponent = this.getNext().parse(sentenceText);
                 for (TextComponent lexeme : lexemeComponent.getChild()) {
                     sentence.add(lexeme);
                 }

@@ -14,7 +14,7 @@ public class LexemeParser extends AbstractTextParser{
             if (part.isBlank()) {
                 continue;
             }
-            TextComponent lexemeComponent = nextParser.parse(part.strip());
+            TextComponent lexemeComponent = this.getNext().parse(part.strip());
             sentenceComposite.add(lexemeComponent);
         }
 
