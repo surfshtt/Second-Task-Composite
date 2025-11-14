@@ -1,5 +1,6 @@
 package by.innowise.task.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface TextComponent {
@@ -7,4 +8,5 @@ public interface TextComponent {
     void remove(TextComponent component);
     TypeComponent getType();
     List<TextComponent> getChild();
+    void setChild(List<TextComponent> childs);
 }

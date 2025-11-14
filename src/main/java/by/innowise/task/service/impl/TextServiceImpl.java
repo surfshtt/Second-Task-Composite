@@ -38,7 +38,7 @@ public class TextServiceImpl implements TextService {
     public List<TextComponent> findAndSortAllSentences(TextComponent text) {
         List<TextComponent> sentences = getSentences(text);
         logger.info("Sentences before sorting: {}", sentences);
-        sentences.sort(Comparator.comparingInt(s -> s.getChild().size()));
+        sentences.sort(Comparator.comparingInt(s -> s.toString().length()));
         logger.info("Sentences after sorting: {}", sentences);
 
         return sentences;
@@ -46,30 +46,55 @@ public class TextServiceImpl implements TextService {
 
     @Override
     public TextComponent changeFirstAndLastLexemes(TextComponent text) {
-        List<TextComponent> sentences = getSentences(text);
-        TextComposite newSentence = new TextComposite(TypeComponent.SENTENCE);
+        if (text == null) return text;
 
-        for(TextComponent sentence : sentences){
-            if(sentence.getChild().size() > 3) {
-                newSentence.add(sentence.getChild().get(sentence.getChild().size() - 1));
-                for (int i = 1; i < sentence.getChild().size() - 1; i++) {
-                    newSentence.add(sentence.getChild().get(i));
+        for(TextComponent paragraph : text.getChild()) {
+            for (TextComponent sentence : paragraph.getChild()) {
+                List<TextComponent> children = new ArrayList<>(sentence.getChild());
+                List<Integer> lexemeIndexes = new ArrayList<>();
+                for (int i = 0; i < children.size(); i++) {
+                    if (children.get(i).getType() == TypeComponent.LEXEME) lexemeIndexes.add(i);
                 }
-                newSentence.add(sentence.getChild().get(0));
+
+                if (lexemeIndexes.size() >= 2) {
+                    int firstIdx = lexemeIndexes.get(0);
+                    int lastIdx = lexemeIndexes.get(lexemeIndexes.size() - 1);
+
+                    TextComponent first = children.get(firstIdx);
+                    TextComponent last = children.get(lastIdx);
+
+                    children.set(firstIdx, last);
+                    children.set(lastIdx, first);
+
+                    sentence.setChild(children);
+                }
             }
         }
-        logger.info("Lexems been changed: {}", newSentence);
-
-        TextComposite newText = new TextComposite(TypeComponent.TEXT);
-        for(TextComponent paragraph : text.getChild()){
-            TextComposite newParagraph = new TextComposite(TypeComponent.PARAGRAPH);
-            for(TextComponent sentence : newSentence.getChild()){
-                newParagraph.add(sentence);
-            }
-            newText.add(newParagraph);
-        }
-
-        return newText;
+        return text;
+//        List<TextComponent> sentences = getSentences(text);
+//        TextComposite newSentence = new TextComposite(TypeComponent.SENTENCE);
+//
+//        for(TextComponent sentence : sentences){
+//            if(sentence.getChild().size() > 3) {
+//                newSentence.add(sentence.getChild().get(sentence.getChild().size() - 1));
+//                for (int i = 1; i < sentence.getChild().size() - 1; i++) {
+//                    newSentence.add(sentence.getChild().get(i));
+//                }
+//                newSentence.add(sentence.getChild().get(0));
+//            }
+//        }
+//        logger.info("Lexems been changed: {}", newSentence);
+//
+//        TextComposite newText = new TextComposite(TypeComponent.TEXT);
+//        for(TextComponent paragraph : text.getChild()){
+//            TextComposite newParagraph = new TextComposite(TypeComponent.PARAGRAPH);
+//            for(TextComponent sentence : newSentence.getChild()){
+//                newParagraph.add(sentence);
+//            }
+//            newText.add(newParagraph);
+//        }
+//
+//        return newText;
     }
 
     private List<TextComponent> getSentences(TextComponent text){

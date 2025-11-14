@@ -37,6 +37,12 @@ public class TextComposite implements TextComponent {
     }
 
     @Override
+    public void setChild(List<TextComponent> childs){
+        components.clear();
+        components.addAll(childs);
+    }
+
+    @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();
 

@@ -1,5 +1,6 @@
 package by.innowise.task.entity;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,6 +31,11 @@ public class TextLeaf implements TextComponent {
     @Override
     public TypeComponent getType() {
         return type;
+    }
+
+    @Override
+    public void setChild(List<TextComponent> childs) {
+        throw new UnsupportedOperationException("Cannot set child of leaf");
     }
 
     @Override
