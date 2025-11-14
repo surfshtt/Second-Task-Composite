@@ -4,10 +4,14 @@ import by.innowise.task.entity.TextComponent;
 import by.innowise.task.entity.TextComposite;
 import by.innowise.task.entity.TypeComponent;
 import by.innowise.task.service.TextService;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.*;
 
 public class TextServiceImpl implements TextService {
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public int findMaxCountOfSentencesWithSimilarWords(TextComponent text){
         List<TextComponent> sentences = getSentences(text);
@@ -26,13 +30,16 @@ public class TextServiceImpl implements TextService {
                 .max()
                 .orElse(0);
 
+        logger.info("Max count of same-word: {}", maxCount);
         return maxCount;
     }
 
     @Override
     public List<TextComponent> findAndSortAllSentences(TextComponent text) {
         List<TextComponent> sentences = getSentences(text);
+        logger.info("Sentences before sorting: {}", sentences);
         sentences.sort(Comparator.comparingInt(s -> s.getChild().size()));
+        logger.info("Sentences after sorting: {}", sentences);
 
         return sentences;
     }
@@ -51,9 +58,9 @@ public class TextServiceImpl implements TextService {
                 newSentence.add(sentence.getChild().get(0));
             }
         }
+        logger.info("Lexems been changed: {}", newSentence);
 
         TextComposite newText = new TextComposite(TypeComponent.TEXT);
-
         for(TextComponent paragraph : text.getChild()){
             TextComposite newParagraph = new TextComposite(TypeComponent.PARAGRAPH);
             for(TextComponent sentence : newSentence.getChild()){
@@ -70,6 +77,7 @@ public class TextServiceImpl implements TextService {
         for(TextComponent paragraph : text.getChild()){
             sentences.addAll(paragraph.getChild());
         }
+        logger.info("Sentences: {}", sentences);
 
         return sentences;
     }

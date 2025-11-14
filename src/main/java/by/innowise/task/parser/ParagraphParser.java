@@ -3,11 +3,15 @@ package by.innowise.task.parser;
 import by.innowise.task.entity.TextComponent;
 import by.innowise.task.entity.TextComposite;
 import by.innowise.task.entity.TypeComponent;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ParagraphParser extends AbstractTextParser {
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public TextComponent parse(String text) {
         TextComposite textComposite = new TextComposite(TypeComponent.TEXT);
@@ -25,6 +29,7 @@ public class ParagraphParser extends AbstractTextParser {
                 textComposite.add(paragraph);
             }
         }
+        logger.debug("Parsed text: {}", textComposite.toString());
         return textComposite;
     }
 }
