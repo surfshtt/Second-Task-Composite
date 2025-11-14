@@ -39,14 +39,30 @@ public class TextServiceImpl implements TextService {
 
     @Override
     public TextComponent changeFirstAndLastLexemes(TextComponent text) {
-//        TextComponent changedText = new TextComposite(TypeComponent.TEXT);
-//
-//        for(TextComponent paragraph : text.getChild()){
-//            for(TextComponent sentence : paragraph.getChild()){
-//
-//            }
-//        }
-        throw new UnsupportedOperationException("changeFirstAndLastLexemes was not implemented");
+        List<TextComponent> sentences = getSentences(text);
+        TextComposite newSentence = new TextComposite(TypeComponent.SENTENCE);
+
+        for(TextComponent sentence : sentences){
+            if(sentence.getChild().size() > 3) {
+                newSentence.add(sentence.getChild().get(sentence.getChild().size() - 1));
+                for (int i = 1; i < sentence.getChild().size() - 1; i++) {
+                    newSentence.add(sentence.getChild().get(i));
+                }
+                newSentence.add(sentence.getChild().get(0));
+            }
+        }
+
+        TextComposite newText = new TextComposite(TypeComponent.TEXT);
+
+        for(TextComponent paragraph : text.getChild()){
+            TextComposite newParagraph = new TextComposite(TypeComponent.PARAGRAPH);
+            for(TextComponent sentence : newSentence.getChild()){
+                newParagraph.add(sentence);
+            }
+            newText.add(newParagraph);
+        }
+
+        return newText;
     }
 
     private List<TextComponent> getSentences(TextComponent text){

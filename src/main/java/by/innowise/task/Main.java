@@ -16,10 +16,6 @@ public class Main {
         AbstractTextParser textParser = parserChainBuilder.buildChain();
 
         TextComponent chainText = textParser.parse(text);
-        for(TextComponent paragraphs : chainText.getChild()){
-            for(TextComponent sentences : paragraphs.getChild()){
-                System.out.print(sentences.toString());
-            }
-        }
+        System.out.print(chainText.toString());
     }
 }

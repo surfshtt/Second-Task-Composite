@@ -62,3 +62,4 @@ public class TextComposite implements TextComponent {
     }
 }
 
+
