@@ -8,5 +8,4 @@ public interface TextComponent {
     void remove(TextComponent component);
     TypeComponent getType();
     List<TextComponent> getChild();
-    void setChild(List<TextComponent> childs);
 }

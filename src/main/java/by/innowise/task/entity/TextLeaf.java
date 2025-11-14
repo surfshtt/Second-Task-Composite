@@ -34,11 +34,6 @@ public class TextLeaf implements TextComponent {
     }
 
     @Override
-    public void setChild(List<TextComponent> childs) {
-        throw new UnsupportedOperationException("Cannot set child of leaf");
-    }
-
-    @Override
     public String toString() {
         return content;
     }

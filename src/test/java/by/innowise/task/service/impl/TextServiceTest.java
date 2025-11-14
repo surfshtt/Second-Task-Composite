@@ -38,7 +38,7 @@ class TextServiceTest {
 
     @Test
     void findMaxCountOfSentencesWithSimilarWordsTest(){
-        int expected = 0;
+        int expected = 6;
 
         int actual = textService.findMaxCountOfSentencesWithSimilarWords(textChain);
 
@@ -59,7 +59,10 @@ class TextServiceTest {
 
     @Test
     void changeFirstAndLastLexemes(){
-        System.out.println(textChain.toString());
-        System.out.println(textService.changeFirstAndLastLexemes(textChain).toString());
+        int expected = textChain.toString().length() + 1;
+
+        int actual = textService.changeFirstAndLastLexemes(textChain).toString().trim().length();
+
+        assertEquals(expected, actual);
     }
 }
